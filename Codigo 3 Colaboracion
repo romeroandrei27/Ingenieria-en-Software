@@ -1,0 +1,18 @@
+@startuml
+actor Estudiante
+participant UI
+participant InteractModule
+participant DB
+
+Estudiante -> UI : 1. Inicia cuestionario
+UI -> InteractModule : 2. Solicitar preguntas
+InteractModule -> DB : 3. Obtener preguntas
+DB --> InteractModule : 4. Retornar preguntas
+InteractModule --> UI : 5. Mostrar preguntas
+Estudiante -> UI : 6. Responde preguntas
+UI -> InteractModule : 7. Enviar respuestas
+InteractModule -> DB : 8. Guardar respuestas
+DB --> InteractModule : 9. Confirmación
+InteractModule --> UI : 10. Mostrar resultados
+UI --> Estudiante : 11. Presenta puntaje/retroalimentación
+@enduml
