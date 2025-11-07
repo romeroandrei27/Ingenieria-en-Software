@@ -1,0 +1,13 @@
+@startuml
+actor Administrador
+
+rectangle "Administración del contenido" {
+  usecase "Gestionar eventos históricos" as UC1
+  usecase "Gestionar versiones de Java" as UC2
+  usecase "Gestionar usuarios y niveles de acceso" as UC3
+}
+
+Administrador --> UC1
+Administrador --> UC2
+Administrador --> UC3
+@enduml
