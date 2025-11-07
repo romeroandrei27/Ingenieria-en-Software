@@ -1,0 +1,13 @@
+@startuml
+actor Usuario
+participant UI
+participant HistModule
+participant DB
+
+Usuario -> UI : 1. Solicita ver línea del tiempo
+UI -> HistModule : 2. Solicitar eventos y versiones
+HistModule -> DB : 3. Consultar eventos históricos
+DB --> HistModule : 4. Retorna datos
+HistModule --> UI : 5. Mostrar línea del tiempo
+UI --> Usuario : 6. Presenta línea del tiempo
+@enduml
