@@ -1,0 +1,13 @@
+@startuml
+actor Usuario
+participant UI
+participant SearchModule
+participant DB
+
+Usuario -> UI : 1. Ingresa término de búsqueda
+UI -> SearchModule : 2. Ejecutar búsqueda
+SearchModule -> DB : 3. Consultar información relevante
+DB --> SearchModule : 4. Retorna resultados
+SearchModule --> UI : 5. Mostrar resultados
+UI --> Usuario : 6. Presenta resultados
+@enduml
