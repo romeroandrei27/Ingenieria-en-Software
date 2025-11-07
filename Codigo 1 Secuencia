@@ -1,0 +1,13 @@
+@startuml
+actor Usuario
+participant "Interfaz de usuario" as UI
+participant "Módulo de información histórica" as Hist
+participant "Base de datos" as DB
+
+Usuario -> UI : Solicita ver línea del tiempo
+UI -> Hist : Solicita eventos y versiones
+Hist -> DB : Consultar eventos históricos
+DB --> Hist : Retorna datos
+Hist --> UI : Mostrar línea del tiempo con detalles
+UI --> Usuario : Presenta línea del tiempo
+@enduml
