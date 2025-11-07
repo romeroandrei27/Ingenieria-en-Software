@@ -1,0 +1,18 @@
+@startuml
+actor Estudiante
+participant "Interfaz de usuario" as UI
+participant "Módulo de interacción" as Interact
+participant "Base de datos" as DB
+
+Estudiante -> UI : Inicia cuestionario
+UI -> Interact : Solicitar preguntas
+Interact -> DB : Obtener preguntas
+DB --> Interact : Retornar preguntas
+Interact --> UI : Mostrar preguntas al estudiante
+Estudiante -> UI : Responde preguntas
+UI -> Interact : Enviar respuestas
+Interact -> DB : Guardar respuestas
+DB --> Interact : Confirmación
+Interact --> UI : Mostrar resultados o retroalimentación
+UI --> Estudiante : Presentar puntaje/retroalimentación
+@enduml
