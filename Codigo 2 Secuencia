@@ -1,0 +1,13 @@
+@startuml
+actor Usuario
+participant "Interfaz de usuario" as UI
+participant "Módulo de búsqueda" as Search
+participant "Base de datos" as DB
+
+Usuario -> UI : Ingresa término de búsqueda
+UI -> Search : Ejecutar búsqueda
+Search -> DB : Consultar información relevante
+DB --> Search : Retornar resultados
+Search --> UI : Mostrar resultados
+UI --> Usuario : Presentar resultados y enlaces a secciones
+@enduml
