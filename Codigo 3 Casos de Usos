@@ -1,0 +1,14 @@
+@startuml
+actor Estudiante
+actor Visitante
+
+rectangle "Interacción con el usuario" {
+  usecase "Registrar comentarios o preguntas" as UC1
+  usecase "Participar en cuestionarios" as UC2
+}
+
+Estudiante --> UC1
+Estudiante --> UC2
+Visitante --> UC2
+@enduml
+
