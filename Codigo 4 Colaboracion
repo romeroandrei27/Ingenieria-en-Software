@@ -1,0 +1,18 @@
+@startuml
+actor Administrador
+participant AdminUI
+participant AdminModule
+participant DB
+
+Administrador -> AdminUI : 1. Inicia sesión
+AdminUI -> AdminModule : 2. Validar credenciales
+AdminModule -> DB : 3. Consultar usuario
+DB --> AdminModule : 4. Retornar datos de autenticación
+AdminModule --> AdminUI : 5. Confirmación de acceso
+Administrador -> AdminUI : 6. Agregar/Editar/Eliminar evento
+AdminUI -> AdminModule : 7. Solicitar operación sobre contenido
+AdminModule -> DB : 8. Ejecutar cambio en base de datos
+DB --> AdminModule : 9. Confirmación
+AdminModule --> AdminUI : 10. Mostrar resultado
+AdminUI --> Administrador : 11. Confirmación de operación
+@enduml
