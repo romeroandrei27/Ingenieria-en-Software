@@ -1,0 +1,74 @@
+@startuml
+!theme blueprint
+
+entity "Usuario" as Usuario {
+  * id_usuario : INT <<PK>>
+  --
+  nombre : VARCHAR
+  correo : VARCHAR
+  contraseña : VARCHAR
+  rol : ENUM('visitante','estudiante','administrador')
+}
+
+entity "VersionJava" as Version {
+  * id_version : INT <<PK>>
+  --
+  nombre_version : VARCHAR
+  anio_lanzamiento : INT
+  descripcion : TEXT
+}
+
+entity "EventoHistorico" as Evento {
+  * id_evento : INT <<PK>>
+  --
+  titulo : VARCHAR
+  descripcion : TEXT
+  fecha_evento : DATE
+  imagen : VARCHAR
+  video : VARCHAR
+  id_version : INT <<FK>>
+}
+
+entity "Comentario" as Comentario {
+  * id_comentario : INT <<PK>>
+  --
+  contenido : TEXT
+  fecha_publicacion : DATE
+  id_usuario : INT <<FK>>
+  id_evento : INT <<FK>>
+}
+
+entity "Cuestionario" as Cuestionario {
+  * id_cuestionario : INT <<PK>>
+  --
+  titulo : VARCHAR
+  descripcion : TEXT
+}
+
+entity "Pregunta" as Pregunta {
+  * id_pregunta : INT <<PK>>
+  --
+  texto : TEXT
+  opcion_correcta : VARCHAR
+  id_cuestionario : INT <<FK>>
+}
+
+entity "RespuestaUsuario" as Respuesta {
+  * id_respuesta : INT <<PK>>
+  --
+  id_usuario : INT <<FK>>
+  id_pregunta : INT <<FK>>
+  respuesta : VARCHAR
+  es_correcta : BOOLEAN
+}
+
+' ==== Relaciones ====
+
+Usuario ||--o{ Comentario : "realiza"
+Evento ||--o{ Comentario : "recibe"
+Version ||--o{ Evento : "contiene"
+Usuario ||--o{ Respuesta : "responde"
+Pregunta ||--o{ Respuesta : "tiene"
+Cuestionario ||--o{ Pregunta : "incluye"
+
+@enduml
