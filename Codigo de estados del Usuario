@@ -1,0 +1,20 @@
+@startuml
+!theme plain
+
+[*] --> Visitante : Accede al sistema
+
+Visitante --> Registrado : Crea cuenta
+Registrado --> Autenticado : Inicia sesión
+Autenticado --> Navegando : Accede a contenidos
+Navegando --> Comentando : Agrega comentario
+Navegando --> RespondiendoCuestionario : Inicia cuestionario
+Navegando --> Administrando : Si rol = administrador
+
+RespondiendoCuestionario --> Navegando : Termina cuestionario
+Comentando --> Navegando : Publica comentario
+Administrando --> Navegando : Finaliza gestión
+
+Autenticado --> CerrandoSesion : Solicita salir
+CerrandoSesion --> Visitante : Sesión cerrada
+
+@enduml
