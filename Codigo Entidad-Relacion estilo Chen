@@ -1,0 +1,77 @@
+@startuml
+!theme plain
+
+entity "Usuario" as Usuario {
+  *id_usuario : INT
+  --
+  nombre : VARCHAR
+  correo : VARCHAR
+  contraseña : VARCHAR
+  rol : ENUM('visitante','estudiante','administrador')
+}
+
+entity "EventoHistorico" as Evento {
+  *id_evento : INT
+  --
+  titulo : VARCHAR
+  descripcion : TEXT
+  fecha_evento : DATE
+  imagen : VARCHAR
+  video : VARCHAR
+  id_version : INT
+}
+
+entity "VersionJava" as Version {
+  *id_version : INT
+  --
+  nombre_version : VARCHAR
+  anio_lanzamiento : INT
+  descripcion : TEXT
+}
+
+entity "Comentario" as Comentario {
+  *id_comentario : INT
+  --
+  contenido : TEXT
+  fecha_publicacion : DATE
+  id_usuario : INT
+  id_evento : INT
+}
+
+entity "Cuestionario" as Cuestionario {
+  *id_cuestionario : INT
+  --
+  titulo : VARCHAR
+  descripcion : TEXT
+}
+
+entity "Pregunta" as Pregunta {
+  *id_pregunta : INT
+  --
+  texto : TEXT
+  opcion_correcta : VARCHAR
+  id_cuestionario : INT
+}
+
+entity "RespuestaUsuario" as Respuesta {
+  *id_respuesta : INT
+  --
+  id_usuario : INT
+  id_pregunta : INT
+  respuesta : VARCHAR
+  es_correcta : BOOLEAN
+}
+
+' ==== Relaciones ====
+
+Usuario "1" -- "N" Comentario : "realiza"
+Evento "1" -- "N" Comentario : "recibe"
+
+Version "1" -- "N" Evento : "contiene"
+
+Usuario "1" -- "N" Respuesta : "responde"
+Pregunta "1" -- "N" Respuesta : "tiene"
+
+Cuestionario "1" -- "N" Pregunta : "incluye"
+
+@enduml
