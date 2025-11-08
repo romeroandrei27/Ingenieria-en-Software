@@ -1,0 +1,14 @@
+@startuml
+!theme plain
+
+[*] --> Borrador : Creado por administrador
+
+Borrador --> Revisado : Contenido validado
+Revisado --> Publicado : Aprobado para mostrar
+Publicado --> Editado : Modificado por administrador
+Editado --> Publicado : Guardado nuevamente
+
+Publicado --> Archivado : Evento obsoleto o reemplazado
+Archivado --> Eliminado : Eliminado permanentemente
+
+@enduml
