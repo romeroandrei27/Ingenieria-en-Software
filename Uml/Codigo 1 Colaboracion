@@ -1,6 +1,6 @@
 @startuml
 actor Usuario
-participant UI
+participant 
 participant HistModule
 participant DB
 
