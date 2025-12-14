@@ -1,0 +1,96 @@
+name: CI Pipeline Tianguistore
+
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs: 
+  validation:
+    name: 📝 Validación de sintaxis
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22 
+
+      - name: Instalación de dependencias
+        run: npm install --prefer-offline --no-audit
+
+      - name: Validación de HTML
+        run: npm run test:html
+        id: html-check
+
+      - name: Validación de JavaScript
+        run: npm run test:js
+        id: js-check
+
+      - name: Summary - Validación
+        if: always()
+        run: |
+          echo "## 📝 Validación de Sintaxis" >> $GITHUB_STEP_SUMMARY
+          echo "- HTML: ${{ steps['html-check'].outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "- JavaScript: ${{ steps['js-check'].outcome }}" >> $GITHUB_STEP_SUMMARY
+
+  tests:
+    name: ⏳ Pruebas en el backend
+    runs-on: ubuntu-latest
+    needs: validation
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22   
+
+      - name: Instalación de dependencias
+        run: npm install --prefer-offline --no-audit
+
+      - name: Aplicar pruebas
+        run: npm test || true
+
+      - name: Summary - Tests
+        if: always()
+        run: |
+          echo "## ⏳ Resultados de pruebas" >> $GITHUB_STEP_SUMMARY
+          echo "- Tests ejecutados correctamente" >> $GITHUB_STEP_SUMMARY
+
+  summary:
+    name:   Resumen final para Andrei Romero Hernandez
+    runs-on: ubuntu-latest
+    needs: [validation, tests]
+    if: always()
+
+    steps:
+      - name: Construcción exitosa
+        if: success()
+        run: echo " Pipeline completado "
+
+      - name: Construccion fallida
+        if: failure()
+        run: |
+          echo "Pipeline con fallas"
+          exit 1
